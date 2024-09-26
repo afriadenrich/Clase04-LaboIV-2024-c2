@@ -1,0 +1,19 @@
+<h1>Login</h1>
+
+<label for="email">Email</label>
+<input
+  id="email"
+  title="Este es el mail"
+  type="email"
+  name="email"
+  [(ngModel)]="email"
+/>
+<br />
+<br />
+<label>Contraseña</label>
+<input [(ngModel)]="password" type="password" />
+<br />
+<br />
+
+<button (click)="login()">Login</button>
+<button (click)="registro()">Registro</button>
