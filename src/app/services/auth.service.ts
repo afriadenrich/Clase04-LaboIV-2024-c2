@@ -3,8 +3,16 @@ import {
   Auth,
   Unsubscribe,
   createUserWithEmailAndPassword,
+  sendEmailVerification,
   signInWithEmailAndPassword,
 } from '@angular/fire/auth';
+import {
+  Firestore,
+  collection,
+  doc,
+  getDocs,
+  setDoc,
+} from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -14,6 +22,7 @@ export class AuthService implements OnInit {
   usuario: any = null;
   authSubscription?: Unsubscribe;
   private auth = inject(Auth);
+  private firestore = inject(Firestore);
   //  private router = inject(Router);
 
   constructor() {
@@ -31,7 +40,12 @@ export class AuthService implements OnInit {
 
   ngOnInit() {}
 
-  async registro(email: string, password: string) {
+  async registro(
+    email: string,
+    password: string,
+    nombre: string = 'fernando',
+    perfil: string = 'especialista'
+  ) {
     try {
       const userCredential = await createUserWithEmailAndPassword(
         this.auth,
@@ -39,6 +53,12 @@ export class AuthService implements OnInit {
         password
       );
       // ACA guardar en la db. email, nombre, tipo de usuario, etc...
+      sendEmailVerification(userCredential.user);
+
+      const col = collection(this.firestore, 'empleados');
+      const documento = doc(col);
+
+      setDoc(documento, { email, nombre, perfil });
     } catch (e) {}
 
     //Crear un usuario, automáticamente inicia sesión.
@@ -61,8 +81,20 @@ registro(email: string, password: string) {
   //Crear un usuario, automáticamente inicia sesión.
 }
 */
-  login(email: string, password: string) {
-    signInWithEmailAndPassword(this.auth, email, password);
+  async login(email: string, password: string) {
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        this.auth,
+        email,
+        password
+      );
+
+      userCredential.user.email;
+
+      const col = collection(this.firestore, 'empleados');
+
+      // getDocs();
+    } catch (e) {}
   }
 
   salir() {

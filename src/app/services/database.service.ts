@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Usuario } from '../classes/usuario';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Timestamp } from '@angular/fire/firestore';
+import { Time } from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
@@ -15,6 +17,10 @@ export class DatabaseService {
 
     documento.set({ ...user });
     // colUsuarios.add({ ...user });
+
+    const fecha: Timestamp = Timestamp.fromDate(new Date());
+
+    const date: Date = fecha.toDate();
   }
 
   traerUsuarios() {

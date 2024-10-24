@@ -1,6 +1,11 @@
+@if(loading) {
+<app-loading></app-loading>
+} @else {
+
 <p>{{ datosRecibidos.url }}</p>
 <button routerLink="listado">Listado de usuarios</button>
 <button routerLink="login">Login</button>
+<button routerLink="upload">Upload</button>
 @if(auth.usuario !== null){
 <h2>{{ auth.usuario.email }}</h2>
 <button class="btn btn-danger" (click)="salir()">Cerrar sesión</button>
@@ -9,6 +14,8 @@
 <hr />
 <router-outlet />
 <!--
+    
+    <h1>{{ apiRequestS.datos | json }}</h1>
+  -->
 
-  <h1>{{ apiRequestS.datos | json }}</h1>
--->
+}

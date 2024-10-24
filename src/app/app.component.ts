@@ -5,17 +5,25 @@ import { ApiRequestService } from './services/api-request.service';
 import { JsonPipe } from '@angular/common';
 import { LoginComponent } from './pages/login/login.component';
 import { Usuario } from './classes/usuario';
+import { LoadingComponent } from './components/loading/loading.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, JsonPipe, LoginComponent, RouterLink],
+  imports: [
+    RouterOutlet,
+    JsonPipe,
+    LoginComponent,
+    RouterLink,
+    LoadingComponent,
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
 export class AppComponent {
   title = 'servicios-2024-c2';
   datosRecibidos: any = {};
+  loading: boolean = false;
 
   constructor(protected auth: AuthService) {}
 
